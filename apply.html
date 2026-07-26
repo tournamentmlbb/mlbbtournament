@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tournament Registration - Faustinorex MLBB</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset & Base Styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #06090e;
+      color: #f0f6fc;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Floating Animated Blobs */
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: 0;
+      opacity: 0.35;
+      animation: floatBlob 12s ease-in-out infinite alternate;
+    }
+
+    .blob-1 { width: 350px; height: 350px; background: #7928ca; top: -50px; left: -50px; }
+    .blob-2 { width: 400px; height: 400px; background: #ff007f; bottom: -100px; right: -100px; animation-delay: -6s; }
+    .blob-3 { width: 300px; height: 300px; background: #00dfd8; top: 40%; left: 60%; animation-delay: -3s; }
+
+    @keyframes floatBlob {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, 40px) scale(1.1); }
+      100% { transform: translate(-20px, 20px) scale(0.95); }
+    }
+
+    /* Container Card */
+    .form-container {
+      position: relative;
+      z-index: 1;
+      background: rgba(22, 27, 34, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 45px 35px;
+      max-width: 650px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(121, 40, 202, 0.2);
+      animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    @keyframes slideUpFade {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animated-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #ff007f, #7928ca, #00dfd8, #ff007f);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: colorGradient 6s ease infinite;
+    }
+
+    @keyframes colorGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .subtitle {
+      color: #8b949e;
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1rem;
+    }
+
+    /* Alert Banner */
+    .alert-box {
+      display: none;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 25px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .alert-error {
+      background-color: rgba(248, 81, 73, 0.15);
+      border: 1px solid #f85149;
+      color: #ff7b72;
+    }
+
+    .alert-success {
+      background-color: rgba(46, 160, 67, 0.15);
+      border: 1px solid #3fb950;
+      color: #56d364;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Slots Badge */
+    .slots-info {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #00dfd8;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #c9d1d9;
+      font-size: 0.95rem;
+    }
+
+    label i { color: #58a6ff; }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      background-color: rgba(13, 17, 23, 0.8);
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #00dfd8;
+      background-color: rgba(13, 17, 23, 1);
+      box-shadow: 0 0 15px rgba(0, 223, 216, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #ffffff;
+      background: linear-gradient(135deg, #1f6feb, #7928ca, #ff007f);
+      background-size: 200% 200%;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 20px rgba(121, 40, 202, 0.4);
+    }
+
+    .submit-btn:hover {
+      background-position: 100% 100%;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(255, 0, 127, 0.6);
+    }
+
+    .footer-actions {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .back-link {
+      color: #8b949e;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-link:hover { color: #00dfd8; }
+
+    .social-links { display: flex; gap: 20px; }
+    .social-icon { font-size: 1.8rem; color: #8b949e; text-decoration: none; }
+    .social-icon.youtube:hover { color: #ff0000; }
+    .social-icon.discord:hover { color: #5865f2; }
+  </style>
+</head>
+<body>
+
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+
+  <div class="form-container">
+    <h1 class="animated-title">Squad Application</h1>
+    <p class="subtitle">Claim your spot in the Faustinorex MLBB Free Tournament!</p>
+
+    <div class="slots-info" id="slotsBadge">
+      <i class="fas fa-users"></i> Applied: <span id="applicantCount">0</span> / 4 Slots Filled
+    </div>
+
+    <div id="alertBox" class="alert-box"></div>
+
+    <form id="tournamentForm" onsubmit="handleFormSubmit(event)">
+      <div class="form-group">
+        <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+        <input type="email" id="email" placeholder="e.g. captain@gmail.com">
+      </div>
+
+      <div class="form-group">
+        <label for="teamName"><i class="fas fa-shield-alt"></i> Squad / Team Name</label>
+        <input type="text" id="teamName" placeholder="e.g. Nexus Esports">
+      </div>
+
+      <div class="form-group">
+        <label for="leaderIgn"><i class="fas fa-crown"></i> Captain's IGN & ID</label>
+        <input type="text" id="leaderIgn" placeholder="e.g. Faustinorex (12345678)">
+      </div>
+
+      <div class="form-group">
+        <label for="discordTag"><i class="fab fa-discord"></i> Discord User Tag</label>
+        <input type="text" id="discordTag" placeholder="e.g. faustinorex_official">
+      </div>
+
+      <div class="form-group">
+        <label for="members"><i class="fas fa-users"></i> Full Squad Roster (5 Players IGN & IDs)</label>
+        <textarea id="members" rows="5" placeholder="Player 1 (Captain):&#10;Player 2:&#10;Player 3:&#10;Player 4:&#10;Player 5:"></textarea>
+      </div>
+
+      <button type="submit" id="submitBtn" class="submit-btn"><i class="fas fa-paper-plane"></i> Submit Registration</button>
+    </form>
+
+    <div class="footer-actions">
+      <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Homepage</a>
+
+      <div class="social-links">
+        <a href="https://youtube.com/@Faustinorex" target="_blank" class="social-icon youtube" title="YouTube">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://discord.gg/8Fa3s4xEcW" target="_blank" class="social-icon discord" title="Discord">
+          <i class="fab fa-discord"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // List of abusive words to block
+    const badWords = [
+      "badword1", "badword2", "fuck", "shit", "bitch", "asshole", 
+      "bastard", "crap", "cunt", "dick", "pussy", "slut", "whore"
+    ];
+
+    document.addEventListener("DOMContentLoaded", function() {
+      updateSlotsCount();
+      checkSystemStatus();
+    });
+
+    function getSubmissions() {
+      return JSON.parse(localStorage.getItem("tournament_applications") || "[]");
+    }
+
+    function updateSlotsCount() {
+      const submissions = getSubmissions();
+      document.getElementById("applicantCount").innerText = submissions.length;
+
+      if (submissions.length >= 4) {
+        document.getElementById("slotsBadge").innerHTML = "<i class='fas fa-lock'></i> Tournament Slots Full (4/4)";
+        document.getElementById("slotsBadge").style.color = "#f85149";
+      }
+    }
+
+    function checkSystemStatus() {
+      // 1. Check Admin Control Toggle (Turned Off)
+      if (localStorage.getItem("registration_open") === "false") {
+        showAlert("error", "Sorry , Today's Application Is over");
+        disableForm();
+        return;
+      }
+
+      // 2. Check 1-time submission restriction
+      if (localStorage.getItem("has_applied_faustinorex") === "true") {
+        showAlert("error", "You have already submitted your application once!");
+        disableForm();
+      }
+    }
+
+    function disableForm() {
+      const form = document.getElementById("tournamentForm");
+      const inputs = form.querySelectorAll("input, textarea, button");
+      inputs.forEach(input => input.disabled = true);
+      document.getElementById("submitBtn").style.opacity = "0.5";
+      document.getElementById("submitBtn").style.cursor = "not-allowed";
+    }
+
+    function showAlert(type, message) {
+      const alertBox = document.getElementById("alertBox");
+      alertBox.className = "alert-box " + (type === "success" ? "alert-success" : "alert-error");
+      alertBox.innerText = message;
+      alertBox.style.display = "block";
+    }
+
+    function containsAbusiveWords(text) {
+      const lowerText = text.toLowerCase();
+      return badWords.some(word => lowerText.includes(word.toLowerCase()));
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+
+      // Check Admin Switch State
+      if (localStorage.getItem("registration_open") === "false") {
+        showAlert("error", "Sorry , Today's Application Is over");
+        return;
+      }
+
+      const email = document.getElementById("email").value.trim();
+      const teamName = document.getElementById("teamName").value.trim();
+      const leaderIgn = document.getElementById("leaderIgn").value.trim();
+      const discordTag = document.getElementById("discordTag").value.trim();
+      const members = document.getElementById("members").value.trim();
+
+      // Check if all fields are filled
+      if (!email || !teamName || !leaderIgn || !discordTag || !members) {
+        showAlert("error", "Sorry You Didn't Fill The Form Completely");
+        return;
+      }
+
+      // Check 4 squad slot limit
+      const submissions = getSubmissions();
+      if (submissions.length >= 4) {
+        showAlert("error", "Registration Closed! Max squads have already registered.");
+        return;
+      }
+
+      // Check 1-time user restriction
+      if (localStorage.getItem("has_applied_faustinorex") === "true") {
+        showAlert("error", "You have already submitted your application once!");
+        disableForm();
+        return;
+      }
+
+      // Filter abusive words
+      const fullContent = `${teamName} ${leaderIgn} ${discordTag} ${members} ${email}`;
+      if (containsAbusiveWords(fullContent)) {
+        showAlert("error", "Your application contains inappropriate language. Please keep it clean.");
+        return;
+      }
+
+      // Save submission
+      const newEntry = {
+        email: email,
+        teamName: teamName,
+        leaderIgn: leaderIgn,
+        discordTag: discordTag,
+        members: members,
+        submittedAt: new Date().toLocaleString()
+      };
+
+      submissions.push(newEntry);
+      localStorage.setItem("tournament_applications", JSON.stringify(submissions));
+      localStorage.setItem("has_applied_faustinorex", "true");
+
+      // Success Display
+      showAlert("success", "Thanks For Submitting");
+      updateSlotsCount();
+      disableForm();
+    }
+  </script>
+</body>
+</html>

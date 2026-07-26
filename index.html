@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faustinorex MLBB Free Tournament</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset & Base Styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #0b0e14;
+      color: #f0f6fc;
+      line-height: 1.6;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      background: radial-gradient(circle at center, #161b22 0%, #0b0e14 100%);
+    }
+
+    /* Live Color-Changing Title */
+    .live-color-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 20px;
+      max-width: 900px;
+      
+      /* Smooth Gradient Shift */
+      background: linear-gradient(90deg, #ff007f, #7928ca, #00dfd8, #ff007f);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: colorShift 6s ease infinite;
+    }
+
+    @keyframes colorShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Tournament Description */
+    .description {
+      max-width: 650px;
+      font-size: 1.2rem;
+      color: #8b949e;
+      margin-bottom: 35px;
+      padding: 0 10px;
+    }
+
+    /* Scroll Down Button */
+    .scroll-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      background-color: #238636;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(35, 134, 54, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .scroll-btn:hover {
+      background-color: #2ea043;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(46, 160, 67, 0.6);
+    }
+
+    /* Registration Section */
+    .apply-section {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+      background-color: #161b22;
+      border-top: 1px solid #30363d;
+    }
+
+    .apply-card {
+      background-color: #0d1117;
+      padding: 40px;
+      border-radius: 12px;
+      border: 1px solid #30363d;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .apply-card h2 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #58a6ff;
+    }
+
+    .apply-card p {
+      color: #8b949e;
+      margin-bottom: 30px;
+      font-size: 1.05rem;
+    }
+
+    .apply-action-btn {
+      display: inline-block;
+      width: 100%;
+      padding: 14px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #ffffff;
+      background: linear-gradient(135deg, #1f6feb, #238636);
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity 0.3s ease, transform 0.2s ease;
+    }
+
+    .apply-action-btn:hover {
+      opacity: 0.95;
+      transform: scale(1.02);
+    }
+
+    /* Social Icons Section */
+    .social-links {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .social-icon {
+      font-size: 2rem;
+      color: #8b949e;
+      transition: color 0.3s ease, transform 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-icon.youtube:hover {
+      color: #ff0000;
+      transform: translateY(-4px);
+    }
+
+    .social-icon.discord:hover {
+      color: #5865f2;
+      transform: translateY(-4px);
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <h1 class="live-color-title">Welcome To Faustinorex MLBB Free Tournament</h1>
+    <p class="description">
+      Gather your squad and prepare for battle! Enter the arena for ultimate glory in our completely free Mobile Legends: Bang Bang community tournament.
+    </p>
+    <a href="apply.html" class="scroll-btn">Apply Here ↓</a>
+  </section>
+
+  <section id="apply" class="apply-section">
+    <div class="apply-card">
+      <h2>Apply Here</h2>
+      <p>Ready to compete? Click below to submit your team details and lock in your slot!</p>
+      <a href="#" class="apply-action-btn">Submit Team Application</a>
+
+      <div class="social-links">
+        <a href="https://youtube.com/@Faustinorex" target="_blank" class="social-icon youtube" title="YouTube">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://discord.gg/8Fa3s4xEcW" target="_blank" class="social-icon discord" title="Discord">
+          <i class="fab fa-discord"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
